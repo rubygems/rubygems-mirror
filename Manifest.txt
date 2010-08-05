@@ -1,0 +1,10 @@
+.autotest
+CHANGELOG.rdoc
+Manifest.txt
+README.rdoc
+Rakefile
+lib/rubygems/mirror.rb
+lib/rubygems/mirror/command.rb
+lib/rubygems_plugin.rb
+test/rubygems/mirror/test_command.rb
+test/test_gem_mirror.rb
