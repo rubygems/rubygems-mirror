@@ -6,7 +6,7 @@ class Gem::Mirror::Fetcher
   class Error < StandardError; end
 
   def initialize
-    @http = Net::HTTP::Persistent.new
+    @http = Net::HTTP::Persistent.new(self.class.name, :ENV)
   end
 
   # Fetch a source path under the base uri, and put it in the same or given
