@@ -6,7 +6,7 @@ class Gem::Mirror::Fetcher
   class Error < StandardError; end
 
   def initialize
-    @http = Net::HTTP::Persistent.new
+    @http = Net::HTTP::Persistent.new(self.class.name, :ENV)
   end
 
   # Fetch a source path under the base uri, and put it in the same or given
@@ -14,7 +14,7 @@ class Gem::Mirror::Fetcher
   def fetch(uri, path)
     modified_time = File.exists?(path) && File.stat(path).mtime.rfc822
 
-    req = Net::HTTP::Get.new uri
+    req = Net::HTTP::Get.new URI.parse(uri).path
     req.add_field 'If-Modified-Since', modified_time if modified_time
 
     @http.request URI(uri), req do |resp|
