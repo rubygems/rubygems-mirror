@@ -49,13 +49,21 @@ Multiple sources and destinations may be specified.
 
       say "Total gems: #{mirror.gems.size}"
 
-      progress = ui.progress_reporter mirror.gems_to_fetch.size,
-                                  "Fetching #{mirror.gems_to_fetch.size} gems"
+      num_to_fetch = mirror.gems_to_fetch.size
+
+      progress = ui.progress_reporter num_to_fetch,
+                                  "Fetching #{num_to_fetch} gems"
+
+      trap(:INFO) { puts "Fetched: #{progress.count}/#{num_to_fetch}" }
 
       mirror.update_gems { progress.updated true }
-      
-      progress = ui.progress_reporter mirror.gems_to_delete.size,
-                                 "Deleting #{mirror.gems_to_delete.size} gems"
+
+      num_to_delete = mirror.gems_to_delete.size
+
+      progress = ui.progress_reporter num_to_delete,
+                                 "Deleting #{num_to_delete} gems"
+
+      trap(:INFO) { puts "Fetched: #{progress.count}/#{num_to_delete}" }
 
       mirror.delete_gems { progress.updated true }
     end
