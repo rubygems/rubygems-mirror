@@ -31,8 +31,8 @@ class Gem::Mirror::Fetcher
       fetch resp['location'], path
     when 200
       write_file(resp, path)
-    when 403
-      warn "403 on #{File.basename(path)}"
+    when 403, 404
+      warn "#{resp.code} on #{File.basename(path)}"
     else
       raise Error, "unexpected response #{resp.inspect}"
     end
