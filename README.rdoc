@@ -9,23 +9,31 @@
 
 == DESCRIPTION:
 
-FIX (describe your package)
+This is an update to the old `gem mirror` command. It uses net/http/persistent
+and threads to grab the mirror set a little faster than the original.
+Eventually it will replace `gem mirror` completely. Right now the API is not
+completely stable (it will change several times before release), however, I
+will maintain stability in master.
 
 == FEATURES/PROBLEMS:
 
-* FIX (list of features or problems)
+* Fast mirroring
+* Limited tests - just functional
 
 == SYNOPSIS:
 
-  FIX (code sample of usage)
+  rake mirror:update
 
 == REQUIREMENTS:
 
-* FIX (list of requirements)
+* rubygems
+* net/http/persistent
+* rake
+* hoe (it will be a gem command eventually - don't stress!)
 
 == INSTALL:
 
-* gem install rubygems-mirror
+* NOT YET - gem install rubygems-mirror
 
 == LICENSE:
 
