@@ -54,7 +54,7 @@ Multiple sources and destinations may be specified.
       progress = ui.progress_reporter num_to_fetch,
                                   "Fetching #{num_to_fetch} gems"
 
-      trap(:INFO) { puts "Fetched: #{progress.count}/#{num_to_fetch}" }
+      # trap(:INFO) { puts "Fetched: #{progress.count}/#{num_to_fetch}" }
 
       mirror.update_gems { progress.updated true }
 
@@ -63,7 +63,7 @@ Multiple sources and destinations may be specified.
       progress = ui.progress_reporter num_to_delete,
                                  "Deleting #{num_to_delete} gems"
 
-      trap(:INFO) { puts "Fetched: #{progress.count}/#{num_to_delete}" }
+      # trap(:INFO) { puts "Fetched: #{progress.count}/#{num_to_delete}" }
 
       mirror.delete_gems { progress.updated true }
     end
