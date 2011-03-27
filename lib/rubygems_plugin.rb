@@ -1,3 +1,6 @@
+require 'rubygems/command_manager'
+require 'rubygems/mirror/command'
+
 module Gem #:nodoc:
 end
 
@@ -6,4 +9,4 @@ class Gem::Mirror
   VERSION = '1.0.0'
 end
 
-# Gem.register_plugin(:command, 'rubygems/mirror/command')
+Gem::CommandManager.instance.register_command :mirror
