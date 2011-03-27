@@ -1,11 +1,6 @@
 = rubygems-mirror
 
-* {Website}[http://rubygems.org/]
-* {Documentation}[http://rubygems.rubyforge.org/rubygems-mirror/README_rdoc.html]
-* {Wiki}[http://wiki.github.com/rubygems/rubygems-mirror/]
-* {Source Code}[http://github.com/rubygems/rubygems-mirror/]
-* {Issues}[http://github.com/rubygems/rubygems-mirror/issues]
-* {Rubyforge}[http://rubyforge.org/projects/rubygems]
+http://github.com/rubygems/rubygems-mirror
 
 == DESCRIPTION:
 
@@ -34,6 +29,15 @@ will maintain stability in master.
 == INSTALL:
 
 * NOT YET - gem install rubygems-mirror
+
+== RESOURCES
+
+* {Website}[http://rubygems.org/]
+* {Documentation}[http://rubygems.rubyforge.org/rubygems-mirror/README_rdoc.html]
+* {Wiki}[http://wiki.github.com/rubygems/rubygems-mirror/]
+* {Source Code}[http://github.com/rubygems/rubygems-mirror/]
+* {Issues}[http://github.com/rubygems/rubygems-mirror/issues]
+* {Rubyforge}[http://rubyforge.org/projects/rubygems]
 
 == LICENSE:
 
