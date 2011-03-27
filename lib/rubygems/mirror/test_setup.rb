@@ -3,6 +3,7 @@ require 'fileutils'
 require 'stringio'
 require 'webrick'
 
+require "rubygems/user_interaction"
 require "rubygems/indexer"
 
 class Gem::Mirror
