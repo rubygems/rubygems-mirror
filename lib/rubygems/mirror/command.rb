@@ -3,6 +3,7 @@ require 'rubygems/command'
 require 'yaml'
 
 class Gem::Mirror::Command < Gem::Command
+  SUPPORTS_INFO_SIGNAL = Signal.list['INFO']
 
   def initialize
     super 'mirror', 'Mirror a gem repository'
@@ -54,7 +55,7 @@ Multiple sources and destinations may be specified.
       progress = ui.progress_reporter num_to_fetch,
                                   "Fetching #{num_to_fetch} gems"
 
-      trap(:INFO) { puts "Fetched: #{progress.count}/#{num_to_fetch}" }
+      trap(:INFO) { puts "Fetched: #{progress.count}/#{num_to_fetch}" } if SUPPORTS_INFO_SIGNAL
 
       mirror.update_gems { progress.updated true }
 
@@ -63,7 +64,7 @@ Multiple sources and destinations may be specified.
       progress = ui.progress_reporter num_to_delete,
                                  "Deleting #{num_to_delete} gems"
 
-      trap(:INFO) { puts "Fetched: #{progress.count}/#{num_to_delete}" }
+      trap(:INFO) { puts "Fetched: #{progress.count}/#{num_to_delete}" } if SUPPORTS_INFO_SIGNAL
 
       mirror.delete_gems { progress.updated true }
     end
