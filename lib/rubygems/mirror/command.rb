@@ -16,9 +16,8 @@ repositories to a local path. The config file is a YAML document that looks
 like this:
 
   ---
-  mirrors:
-    - from: http://gems.example.com # source repository URI
-      to: /path/to/mirror           # destination directory
+  - from: http://gems.example.com # source repository URI
+    to: /path/to/mirror           # destination directory
 
 Multiple sources and destinations may be specified.
     EOF
