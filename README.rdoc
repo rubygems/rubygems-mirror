@@ -15,16 +15,24 @@ will maintain stability in master.
 * Fast mirroring
 * Limited tests - just functional
 
-== SYNOPSIS:
-
-  rake mirror:update
-
 == REQUIREMENTS:
 
 * rubygems
 * net/http/persistent
 * rake
 * hoe (it will be a gem command eventually - don't stress!)
+
+== USAGE
+
+* Clone this repository
+* Put a .gemmirrorrc file in your home directory that looks like the following:
+
+---
+- from: http://rubygems.org
+  to: /data/rubygems
+
+* Run rake mirror:update
+
 
 == INSTALL:
 
