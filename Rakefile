@@ -29,3 +29,9 @@ namespace :mirror do
     mirror.execute
   end
 end
+
+namespace :test do
+  task :integration do
+    sh Gem.ruby, '-Ilib', '-rubygems', '-S', 'gem', 'mirror'
+  end
+end
