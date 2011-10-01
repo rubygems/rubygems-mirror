@@ -19,24 +19,21 @@ will maintain stability in master.
 
 * rubygems
 * net/http/persistent
-* rake
-* hoe (it will be a gem command eventually - don't stress!)
 
 == USAGE
 
-* Clone this repository
-* Put a .gemmirrorrc file in your home directory that looks like the following:
+* In a file at ~/.gem/.mirrorrc add a config that looks like the following:
 
 ---
 - from: http://rubygems.org
   to: /data/rubygems
 
-* Run rake mirror:update
-
+* Either install the gem, then run `gem mirror`, or
+* Clone then run `rake mirror:update`
 
 == INSTALL:
 
-* NOT YET - gem install rubygems-mirror
+* gem install rubygems-mirror
 
 == RESOURCES
 
