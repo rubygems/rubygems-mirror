@@ -1,6 +1,5 @@
 #!/usr/bin/env rake
 
-require 'rubygems'
 require 'hoe'
 Hoe.plugin :doofus, :git, :gemcutter
 

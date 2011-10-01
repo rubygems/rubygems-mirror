@@ -6,6 +6,12 @@ require 'webrick'
 require "rubygems/user_interaction"
 require "rubygems/indexer"
 
+# All files must be proactively loaded, otherwhise when the Gem index is
+# replaced, requires will fail!
+require "rubygems/mirror"
+require "rubygems/mirror/fetcher"
+require "rubygems/mirror/pool"
+
 class Gem::Mirror
 
   # Provide assistance for authors of code that utilises Gem::Mirror. The

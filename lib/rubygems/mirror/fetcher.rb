@@ -1,4 +1,3 @@
-require 'net/http'
 require 'net/http/persistent'
 
 class Gem::Mirror::Fetcher
