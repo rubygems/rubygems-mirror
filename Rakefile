@@ -11,7 +11,7 @@ Hoe.spec 'rubygems-mirror' do
   extra_dev_deps << %w[hoe-git >=1.3.0]
   extra_dev_deps << %w[hoe-gemcutter >=1.0.0]
   extra_dev_deps << %w[builder >=2.1.2]
-  extra_deps << %w[net-http-persistent >=1.2.5]
+  extra_deps     << %w[net-http-persistent >=2.1]
 
   self.extra_rdoc_files = FileList["**/*.rdoc"]
   self.history_file     = "CHANGELOG.rdoc"
