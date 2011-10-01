@@ -24,7 +24,7 @@ Multiple sources and destinations may be specified.
   end
 
   def execute
-    config_file = File.join Gem.user_home, '.gemmirrorrc'
+    config_file = File.join Gem.user_home, '.gem', '.mirrorrc'
 
     raise "Config file #{config_file} not found" unless File.exist? config_file
 
