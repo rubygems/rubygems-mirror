@@ -5,6 +5,8 @@ class Gem::Mirror
   autoload :Fetcher, 'rubygems/mirror/fetcher'
   autoload :Pool, 'rubygems/mirror/pool'
 
+  VERSION = '1.0.0'
+
   SPECS_FILE = "specs.#{Gem.marshal_version}"
   SPECS_FILE_Z = "specs.#{Gem.marshal_version}.gz"
 
