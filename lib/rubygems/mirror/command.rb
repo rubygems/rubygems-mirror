@@ -2,7 +2,7 @@ require 'rubygems/mirror'
 require 'rubygems/command'
 require 'yaml'
 
-class Gem::Mirror::Command < Gem::Command
+class Gem::Commands::MirrorCommand < Gem::Command
   SUPPORTS_INFO_SIGNAL = Signal.list['INFO']
 
   def initialize

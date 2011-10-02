@@ -25,7 +25,7 @@ namespace :mirror do
     $:.unshift 'lib'
     require 'rubygems/mirror/command'
 
-    mirror = Gem::Mirror::Command.new
+    mirror = Gem::Commands::MirrorCommand.new
     mirror.execute
   end
 end
