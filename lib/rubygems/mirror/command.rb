@@ -11,7 +11,7 @@ class Gem::Commands::MirrorCommand < Gem::Command
 
   def description # :nodoc:
     <<-EOF
-The mirror command uses the ~/.gemmirrorrc config file to mirror remote gem
+The mirror command uses the ~/.gem/.mirrorrc config file to mirror remote gem
 repositories to a local path. The config file is a YAML document that looks
 like this:
 
