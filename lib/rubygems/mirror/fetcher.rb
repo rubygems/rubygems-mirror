@@ -1,4 +1,5 @@
 require 'net/http/persistent'
+require 'time'
 
 class Gem::Mirror::Fetcher
   # TODO  beef
