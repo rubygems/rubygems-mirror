@@ -26,8 +26,8 @@ will maintain stability in master.
 
     ---
     - from: http://rubygems.org
-    	to: /data/rubygems
-    	parallelism: 10
+      to: /data/rubygems
+      parallelism: 10
 
 * Either install the gem, then run `gem mirror`, or
 * Clone then run `rake mirror:update`
