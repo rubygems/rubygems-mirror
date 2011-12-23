@@ -15,10 +15,10 @@ class Gem::Mirror
 
   RUBY = 'ruby'
 
-  def initialize(from = DEFAULT_URI, to = DEFAULT_TO, parallelism = 10)
+  def initialize(from = DEFAULT_URI, to = DEFAULT_TO, parallelism = nil)
     @from, @to = from, to
     @fetcher = Fetcher.new
-    @pool = Pool.new(parallelism)
+    @pool = Pool.new(parallelism || 10)
   end
 
   def from(*args)

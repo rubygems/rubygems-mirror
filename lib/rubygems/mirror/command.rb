@@ -11,13 +11,14 @@ class Gem::Commands::MirrorCommand < Gem::Command
 
   def description # :nodoc:
     <<-EOF
-The mirror command uses the ~/.gem/.mirrorrc config file to mirror remote gem
-repositories to a local path. The config file is a YAML document that looks
-like this:
+The mirror command uses the ~/.gem/.mirrorrc config file to mirror
+remote gem repositories to a local path. The config file is a YAML
+document that looks like this:
 
   ---
   - from: http://gems.example.com # source repository URI
     to: /path/to/mirror           # destination directory
+    parallelism: 10               # use 10 threads for downloads
 
 Multiple sources and destinations may be specified.
     EOF
@@ -38,13 +39,14 @@ Multiple sources and destinations may be specified.
 
       get_from = mir['from']
       save_to = File.expand_path mir['to']
+      parallelism = mir['parallelism']
 
       raise "Directory not found: #{save_to}" unless File.exist? save_to
       raise "Not a directory: #{save_to}" unless File.directory? save_to
 
-      mirror = Gem::Mirror.new(get_from, save_to)
+      mirror = Gem::Mirror.new(get_from, save_to, parallelism)
       
-      say "Fetching: #{mirror.from(Gem::Mirror::SPECS_FILE_Z)}"
+      say "Fetching: #{mirror.from(Gem::Mirror::SPECS_FILE_Z)} with #{parallelism} threads"
       mirror.update_specs
 
       say "Total gems: #{mirror.gems.size}"
