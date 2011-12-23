@@ -62,7 +62,7 @@ class Gem::Mirror
     gems_to_fetch.each do |g|
       @pool.job do
         @fetcher.fetch(from('gems', g), to('gems', g))
-        yield
+        yield if block_given?
       end
     end
 
@@ -73,7 +73,7 @@ class Gem::Mirror
     gems_to_delete.each do |g|
       @pool.job do
         File.delete(to('gems', g))
-        yield
+        yield if block_given?
       end
     end
 
