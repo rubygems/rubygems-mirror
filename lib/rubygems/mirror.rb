@@ -62,6 +62,9 @@ class Gem::Mirror
     gems_to_fetch.each do |g|
       @pool.job do
         @fetcher.fetch(from('gems', g), to('gems', g))
+        # download gemspec.rz
+        g_spec = "#{g}spec.rz"
+        @fetcher.fetch(from("quick/Marshal.#{Gem.marshal_version}", g_spec), to("quick/Marshal.#{Gem.marshal_version}", g_spec))
         yield if block_given?
       end
     end
