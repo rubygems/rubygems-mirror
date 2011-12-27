@@ -90,14 +90,14 @@ class Gem::Mirror
   end
 
   def delete_gems
-    gems_to_delete.each do |g|
-      @pool.job do
-        File.delete(to('gems', g))
-        yield if block_given?
-      end
-    end
-
-    @pool.run_til_done
+    # gems_to_delete.each do |g|
+    #   @pool.job do
+    #     File.delete(to('gems', g))
+    #     yield if block_given?
+    #   end
+    # end
+    # 
+    # @pool.run_til_done
   end
 
   def update
