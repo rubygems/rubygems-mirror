@@ -50,7 +50,7 @@ class Gem::Mirror::Fetcher
   ensure
     # cleanup incomplete files, rescue perm errors etc, they're being
     # raised already.
-    File.delete(path) rescue nil if $!
+    # File.delete(path) rescue nil if $!
   end
 
 end
