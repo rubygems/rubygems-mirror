@@ -7,9 +7,9 @@ class Gem::Mirror
 
   VERSION = '1.0.1'
   
-  SPECS_FILE = "specs.#{Gem.marshal_version}"
+  SPECS_FILES = [ "specs.#{Gem.marshal_version}", "prerelease_specs.#{Gem.marshal_version}" ]
   SPECS_FILE_Z = "specs.#{Gem.marshal_version}.gz"
-  SPECS_FILES = ["yaml","yaml.Z","latest_specs.#{Gem.marshal_version}","latest_specs.#{Gem.marshal_version}.gz",
+  ALL_SPECS_FILES = ["yaml","yaml.Z","latest_specs.#{Gem.marshal_version}","latest_specs.#{Gem.marshal_version}.gz",
                 "Marshal.#{Gem.marshal_version}", "Marshal.#{Gem.marshal_version}.Z",
                 "prerelease_specs.#{Gem.marshal_version}","prerelease_specs.#{Gem.marshal_version}.gz",
                 "specs.#{Gem.marshal_version}","specs.#{Gem.marshal_version}.gz"]
@@ -34,13 +34,16 @@ class Gem::Mirror
   end
 
   def update_specs
-    specz = to(SPECS_FILE_Z)
-    @fetcher.fetch(from(SPECS_FILE_Z), specz)
-    open(to(SPECS_FILE), 'wb') { |f| f << Gem.gunzip(File.read(specz)) }
+    SPECS_FILES.each do |sf|
+      sfz = "#{sf}.gz"
+      specz = to(sfz)
+      @fetcher.fetch(from(sfz), specz)
+      open(to(sf), 'wb') { |f| f << Gem.gunzip(File.read(specz)) }
+    end
   end
   
   def fetch_all_specs
-    SPECS_FILES.each do |spec_file|
+    ALL_SPECS_FILES.each do |spec_file|
       print "Fetching #{spec_file}..."
       @fetcher.fetch(from(spec_file), to(spec_file))
       puts "[Done]"
@@ -48,9 +51,13 @@ class Gem::Mirror
   end
 
   def gems
-    update_specs unless File.exists?(to(SPECS_FILE))
+    gems = []
+    SPECS_FILES.each do |sf|
+      update_specs unless File.exists?(to(sf))
 
-    gems = Marshal.load(File.read(to(SPECS_FILE)))
+      gems += Marshal.load(File.read(to(sf)))
+    end
+
     gems.map! do |name, ver, plat|
       # If the platform is ruby, it is not in the gem name
       "#{name}-#{ver}#{"-#{plat}" unless plat == RUBY}.gem"
