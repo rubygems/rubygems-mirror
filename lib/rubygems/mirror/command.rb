@@ -45,7 +45,7 @@ Multiple sources and destinations may be specified.
       parallelism = mir['parallelism']
       retries = mir['retries'] || 1
       skiperror = mir['skiperror']
-      delete = mirr['delete']
+      delete = mir['delete']
 
       raise "Directory not found: #{save_to}" unless File.exist? save_to
       raise "Not a directory: #{save_to}" unless File.directory? save_to
@@ -55,7 +55,7 @@ Multiple sources and destinations may be specified.
       say "Fetching: #{mirror.from(Gem::Mirror::SPECS_FILE_Z)} with #{parallelism} threads"
       mirror.update_specs
 
-      say "Total gems: #{mirror.gems.size}"nn
+      say "Total gems: #{mirror.gems.size}"
 
       num_to_fetch = mirror.gems_to_fetch.size
 
