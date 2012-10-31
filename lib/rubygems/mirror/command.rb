@@ -19,8 +19,9 @@ document that looks like this:
   - from: http://gems.example.com # source repository URI
     to: /path/to/mirror           # destination directory
     parallelism: 10               # use 10 threads for downloads
-    retries: 3                      # retry 3 times if fail to download a gem., def is 1. (no retry)
-    skiperror: true              # whether skip error, def is true. will stop at error if set this to false.
+    retries: 3                      # retry 3 times if fail to download a gem, optional, def is 1. (no retry)
+    delete: false                 # whether delete gems (if remote ones are removed),optional, default is false. 
+    skiperror: true              # whether skip error, optional, def is true. will stop at error if set this to false.
 
 Multiple sources and destinations may be specified.
     EOF
@@ -44,6 +45,7 @@ Multiple sources and destinations may be specified.
       parallelism = mir['parallelism']
       retries = mir['retries'] || 1
       skiperror = mir['skiperror']
+      delete = mirr['delete']
 
       raise "Directory not found: #{save_to}" unless File.exist? save_to
       raise "Not a directory: #{save_to}" unless File.directory? save_to
@@ -53,7 +55,7 @@ Multiple sources and destinations may be specified.
       say "Fetching: #{mirror.from(Gem::Mirror::SPECS_FILE_Z)} with #{parallelism} threads"
       mirror.update_specs
 
-      say "Total gems: #{mirror.gems.size}"
+      say "Total gems: #{mirror.gems.size}"nn
 
       num_to_fetch = mirror.gems_to_fetch.size
 
@@ -64,14 +66,17 @@ Multiple sources and destinations may be specified.
 
       mirror.update_gems { progress.updated true }
 
-      num_to_delete = mirror.gems_to_delete.size
 
-      progress = ui.progress_reporter num_to_delete,
+      if delete
+        num_to_delete = mirror.gems_to_delete.size
+
+        progress = ui.progress_reporter num_to_delete,
                                  "Deleting #{num_to_delete} gems"
 
-      trap(:INFO) { puts "Fetched: #{progress.count}/#{num_to_delete}" } if SUPPORTS_INFO_SIGNAL
+        trap(:INFO) { puts "Fetched: #{progress.count}/#{num_to_delete}" } if SUPPORTS_INFO_SIGNAL
 
-      mirror.delete_gems { progress.updated true }
+        mirror.delete_gems { progress.updated true }
+      end
     end
   end
 end
