@@ -20,6 +20,7 @@ document that looks like this:
     to: /path/to/mirror           # destination directory
     parallelism: 10               # use 10 threads for downloads
     retries: 3                      # retry 3 times if fail to download a gem., def is 1. (no retry)
+    skiperror: true              # whether skip error, def is true. will stop at error if set this to false.
 
 Multiple sources and destinations may be specified.
     EOF
@@ -42,12 +43,12 @@ Multiple sources and destinations may be specified.
       save_to = File.expand_path mir['to']
       parallelism = mir['parallelism']
       retries = mir['retries'] || 1
-      nodelete = mir['nodelete'] || true      
+      skiperror = mir['skiperror']
 
       raise "Directory not found: #{save_to}" unless File.exist? save_to
       raise "Not a directory: #{save_to}" unless File.directory? save_to
 
-      mirror = Gem::Mirror.new(get_from, save_to, parallelism, retries)
+      mirror = Gem::Mirror.new(get_from, save_to, parallelism, retries, skiperror)
       
       say "Fetching: #{mirror.from(Gem::Mirror::SPECS_FILE_Z)} with #{parallelism} threads"
       mirror.update_specs

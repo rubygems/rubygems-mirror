@@ -9,7 +9,9 @@ class Gem::Mirror::Fetcher
     @http = Net::HTTP::Persistent.new(self.class.name, :ENV)
     @opts = opts
 
+    # default opts
     @opts[:retries] ||= 1
+    @opts[:skiperror] = true if @opts[:skiperror].nil?
   end
 
   # Fetch a source path under the base uri, and put it in the same or given
@@ -29,6 +31,7 @@ class Gem::Mirror::Fetcher
     rescue Error
       retries -= 1
       retry if retries > 0
+      raise if not @opts[:skiperror]
     end 
   end
 
