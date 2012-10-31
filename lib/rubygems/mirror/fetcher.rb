@@ -5,8 +5,11 @@ class Gem::Mirror::Fetcher
   # TODO  beef
   class Error < StandardError; end
 
-  def initialize
+  def initialize opts={}
     @http = Net::HTTP::Persistent.new(self.class.name, :ENV)
+    @opts = opts
+
+    @opts[:retries] ||= 1
   end
 
   # Fetch a source path under the base uri, and put it in the same or given
@@ -17,9 +20,16 @@ class Gem::Mirror::Fetcher
     req = Net::HTTP::Get.new URI.parse(uri).path
     req.add_field 'If-Modified-Since', modified_time if modified_time
 
-    @http.request URI(uri), req do |resp|
-      return handle_response(resp, path)
-    end
+    retries = @opts[:retries]
+    begin
+      puts "get: #{uri}, #{retries}"
+      @http.request URI(uri), req do |resp|
+        return handle_response(resp, path)
+      end
+    rescue Error
+      retries -= 1
+      retry if retries > 0
+    end 
   end
 
   # Handle an http response, follow redirects, etc. returns true if a file was
@@ -32,7 +42,7 @@ class Gem::Mirror::Fetcher
     when 200
       write_file(resp, path)
     when 403, 404
-      warn "#{resp.code} on #{File.basename(path)}"
+      raise Error,"#{resp.code} on #{File.basename(path)}"
     else
       raise Error, "unexpected response #{resp.inspect}"
     end
