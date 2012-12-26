@@ -32,13 +32,13 @@ class Gem::Mirror
   def update_specs
     specz = to(SPECS_FILE_Z)
     @fetcher.fetch(from(SPECS_FILE_Z), specz)
-    open(to(SPECS_FILE), 'wb') { |f| f << Gem.gunzip(File.read(specz)) }
+    open(to(SPECS_FILE), 'wb') { |f| f << Gem.gunzip(Gem.read_binary(specz)) }
   end
 
   def gems
     update_specs unless File.exists?(to(SPECS_FILE))
 
-    gems = Marshal.load(File.read(to(SPECS_FILE)))
+    gems = Marshal.load(Gem.read_binary(to(SPECS_FILE)))
     gems.map! do |name, ver, plat|
       # If the platform is ruby, it is not in the gem name
       "#{name}-#{ver}#{"-#{plat}" unless plat == RUBY}.gem"
