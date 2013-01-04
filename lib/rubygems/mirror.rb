@@ -38,7 +38,7 @@ class Gem::Mirror
       sfz = "#{sf}.gz"
       specz = to(sfz)
       @fetcher.fetch(from(sfz), specz)
-      open(to(sf), 'wb') { |f| f << Gem.gunzip(File.read(specz)) }
+      open(to(sf), 'wb') { |f| f << Gem.gunzip(Gem.read_binary(specz)) }
     end
   end
   
@@ -55,7 +55,7 @@ class Gem::Mirror
     SPECS_FILES.each do |sf|
       update_specs unless File.exists?(to(sf))
 
-      gems += Marshal.load(File.read(to(sf)))
+      gems += Marshal.load(Gem.read_binary(to(sf)))
     end
 
     gems.map! do |name, ver, plat|
