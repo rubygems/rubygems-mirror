@@ -42,15 +42,18 @@ class Gem::Mirror::Fetcher
   # Efficiently writes an http response object to a particular path. If there
   # is an error, it will remove the target file.
   def write_file(resp, path)
+    body = resp.body
+    return false if resp.body.length == 0
     FileUtils.mkdir_p File.dirname(path)
     File.open(path, 'wb') do |output|
-      resp.read_body { |chunk| output << chunk }
+      output << body
     end
+    body = nil
     true
   ensure
     # cleanup incomplete files, rescue perm errors etc, they're being
     # raised already.
-    File.delete(path) rescue nil if $!
+    # File.delete(path) rescue nil if $!
   end
 
 end
