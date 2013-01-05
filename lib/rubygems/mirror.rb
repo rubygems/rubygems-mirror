@@ -79,7 +79,7 @@ class Gem::Mirror
   end
 
   def gemspecs_to_fetch
-    gems.map {|g| "#{g}spec.rz" } - existing_gemspecs
+    gems.map { |g| "#{g}spec.rz" } - existing_gemspecs
   end
 
   def gems_to_delete
