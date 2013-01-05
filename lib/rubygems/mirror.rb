@@ -38,7 +38,7 @@ class Gem::Mirror
       sfz = "#{sf}.gz"
       specz = to(sfz)
       @fetcher.fetch(from(sfz), specz)
-      open(to(sf), 'wb') { |f| f << Gem.gunzip(File.read(specz)) }
+      open(to(sf), 'wb') { |f| f << Gem.gunzip(Gem.read_binary(specz)) }
     end
   end
   
@@ -55,7 +55,7 @@ class Gem::Mirror
     SPECS_FILES.each do |sf|
       update_specs unless File.exists?(to(sf))
 
-      gems += Marshal.load(File.read(to(sf)))
+      gems += Marshal.load(Gem.read_binary(to(sf)))
     end
 
     gems.map! do |name, ver, plat|
@@ -69,8 +69,17 @@ class Gem::Mirror
     Dir[to('gems', '*.gem')].entries.map { |f| File.basename(f) }
   end
 
+  def existing_gemspecs
+    Dir[to("quick/Marshal.#{Gem.marshal_version}", '*.rz')].entries.map { |f| File.basename(f) }
+
+  end
+
   def gems_to_fetch
     gems - existing_gems
+  end
+
+  def gemspecs_to_fetch
+    gems.map { |g| "#{g}spec.rz" } - existing_gemspecs
   end
 
   def gems_to_delete
@@ -85,14 +94,17 @@ class Gem::Mirror
     gems_to_fetch.each do |g|
       @pool.job do
         @fetcher.fetch(from('gems', g), to('gems', g))
-        # download gemspec.rz
-        g_spec = "#{g}spec.rz"
+        print "."
+        yield if block_given?
+      end
+    end
+    gemspecs_to_fetch.each do |g_spec|
+      @pool.job do
         @fetcher.fetch(from("quick/Marshal.#{Gem.marshal_version}", g_spec), to("quick/Marshal.#{Gem.marshal_version}", g_spec))
         print "."
         yield if block_given?
       end
     end
-
     @pool.run_til_done
   end
 
