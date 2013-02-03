@@ -27,7 +27,7 @@ class Gem::Mirror::Fetcher
   def handle_response(resp, path)
     case resp.code.to_i
     when 304
-    when 302
+    when 301, 302
       fetch resp['location'], path
     when 200
       write_file(resp, path)
