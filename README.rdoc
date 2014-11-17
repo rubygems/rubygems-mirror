@@ -17,8 +17,13 @@ will maintain stability in master.
 
 == REQUIREMENTS:
 
-* rubygems
-* net/http/persistent
+* rubygems : use either sudo apt-get install rubygems (on Debian) or sudo gem install rubygems
+* net/http/persistent: use sudo gem install net-http-persistent
+
+== INSTALL:
+
+* use gem install rubygems-mirror 
+* or install from sources: clone this repo then run `rake mirror:update`
 
 == USAGE
 
@@ -29,12 +34,9 @@ will maintain stability in master.
       to: /data/rubygems
       parallelism: 10
 
-* Either install the gem, then run `gem mirror`, or
-* Clone then run `rake mirror:update`
+* Then run `gem mirror`
 
-== INSTALL:
 
-* gem install rubygems-mirror
 
 == RESOURCES
 
