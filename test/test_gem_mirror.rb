@@ -4,7 +4,7 @@ require "rubygems/mirror/test_setup"
 
 require 'minitest/autorun' # damn you autotest.
 
-class TestGemMirror < MiniTest::Unit::TestCase
+class TestGemMirror < Minitest::Test
   include Gem::Mirror::TestSetup
 
   # Used to make sure we don't raise on construction, works against defaults
@@ -16,8 +16,8 @@ class TestGemMirror < MiniTest::Unit::TestCase
     with_server do
       mirror = Gem::Mirror.new(*opts)
       mirror.update_specs
-      assert File.exists?(mirror_path + "/#{Gem::Mirror::SPECS_FILE_Z}")
-      assert File.exists?(mirror_path + "/#{Gem::Mirror::SPECS_FILE_Z}")
+      assert File.exist?(mirror_path + "/#{Gem::Mirror::SPECS_FILE_Z}")
+      assert File.exist?(mirror_path + "/#{Gem::Mirror::SPECS_FILE_Z}")
     end
   end
 

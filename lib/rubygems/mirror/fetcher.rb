@@ -12,7 +12,7 @@ class Gem::Mirror::Fetcher
   # Fetch a source path under the base uri, and put it in the same or given
   # destination path under the base path.
   def fetch(uri, path)
-    modified_time = File.exists?(path) && File.stat(path).mtime.rfc822
+    modified_time = File.exist?(path) && File.stat(path).mtime.rfc822
 
     req = Net::HTTP::Get.new URI.parse(uri).path
     req.add_field 'If-Modified-Since', modified_time if modified_time
