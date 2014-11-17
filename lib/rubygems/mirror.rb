@@ -36,7 +36,7 @@ class Gem::Mirror
   end
 
   def gems
-    update_specs unless File.exists?(to(SPECS_FILE))
+    update_specs unless File.exist?(to(SPECS_FILE))
 
     gems = Marshal.load(Gem.read_binary(to(SPECS_FILE)))
     gems.map! do |name, ver, plat|

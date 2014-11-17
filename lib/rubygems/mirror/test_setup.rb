@@ -94,7 +94,7 @@ class Gem::Mirror
           io.write(spec.to_ruby)
         end
         Dir.chdir(working) do
-          gem_file = Gem::Builder.new(spec).build
+          gem_file = Gem::Package.build(spec)
           FileUtils.mv(gem_file, File.join(@source_path, 'gems', gem_file))
         end
       end
@@ -149,7 +149,7 @@ class Gem::Mirror
       @server && @server.shutdown
       @server_thread && @server_thread.join
     end
-    
+
     def with_server
       setup_ui
       setup_gem_source
