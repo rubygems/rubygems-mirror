@@ -90,6 +90,28 @@ class Gem::Mirror
         end
       end
 
+      # add prerelease gem versions
+      prerelease_gemspecs = %w[x y].map do |name|
+        FileUtils.touch File.join(working, 'lib', "#{name}.rb")
+        FileUtils.touch File.join(rzspecdir, "#{name}spec.rz")
+        Gem::Specification.new do |s|
+          s.platform = Gem::Platform::RUBY
+          s.name = name
+          s.version = "0.1.b"
+          s.author = 'rubygems'
+          s.email = 'example@example.com'
+          s.homepage = 'http://example.com'
+          s.has_rdoc = false
+          s.description = 'desc'
+          s.summary = "summ"
+          s.require_paths = %w[lib]
+          s.files = %W[lib/#{name}.rb]
+          s.rubyforge_project = 'rubygems'
+        end
+      end
+
+      gemspecs.concat(prerelease_gemspecs)
+
       gemspecs.each do |spec|
         path = File.join(working, "#{spec.name}.gemspec")
         open(path, 'w') do |io|

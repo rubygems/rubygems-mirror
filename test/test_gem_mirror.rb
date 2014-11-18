@@ -16,8 +16,9 @@ class TestGemMirror < Minitest::Test
     with_server do
       mirror = Gem::Mirror.new(*opts)
       mirror.update_specs
-      assert File.exist?(mirror_path + "/#{Gem::Mirror::SPECS_FILE_Z}")
-      assert File.exist?(mirror_path + "/#{Gem::Mirror::SPECS_FILE_Z}")
+      Gem::Mirror::SPECS_FILES.each do |sf|
+        assert File.exist?(mirror_path + "/#{sf}.gz")
+      end
     end
   end
 
@@ -39,7 +40,7 @@ class TestGemMirror < Minitest::Test
       assert_equal source_gems, mirror_gems
       assert_equal source_rz_specs, mirror_rz_specs
       # XXX(raggi): need to figure out how to hide the system gems in 2.0
-      assert 6 <= updates
+      assert 10 <= updates
     end
   end
 
