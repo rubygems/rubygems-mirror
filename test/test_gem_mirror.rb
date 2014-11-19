@@ -32,9 +32,14 @@ class TestGemMirror < Minitest::Test
         Dir[path + '/gems/*'].map { |f| File.basename(f) }
       end
 
+      source_rz_specs, mirror_rz_specs = [source_path, mirror_path].map do |path|
+        Dir[path + "/quick/Marshal.#{Gem.marshal_version}/*"].map { |f| File.basename(f) }
+      end
+
       assert_equal source_gems, mirror_gems
+      assert_equal source_rz_specs, mirror_rz_specs
       # XXX(raggi): need to figure out how to hide the system gems in 2.0
-      assert 3 <= updates
+      assert 6 <= updates
     end
   end
 
