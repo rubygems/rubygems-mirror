@@ -15,9 +15,10 @@ class Gem::Mirror
 
   RUBY = 'ruby'
 
-  def initialize(from = DEFAULT_URI, to = DEFAULT_TO, parallelism = nil)
+  def initialize(from = DEFAULT_URI, to = DEFAULT_TO, parallelism = nil
+    , retries = nil, skiperror=nil)
     @from, @to = from, to
-    @fetcher = Fetcher.new
+    @fetcher = Fetcher.new(:retries => retries, :skiperror => skiperror)
     @pool = Pool.new(parallelism || 10)
   end
 
@@ -54,6 +55,14 @@ class Gem::Mirror
     gems - existing_gems
   end
 
+  def existing_gemspecs
+    Dir[to("quick/Marshal.#{Gem.marshal_version}", '*.rz')].entries.map { |f| File.basename(f) }
+  end
+
+  def gemspecs_to_fetch
+    gems.map { |g| "#{g}spec.rz" } - existing_gemspecs
+  end
+
   def gems_to_delete
     existing_gems - gems
   end
@@ -65,6 +74,13 @@ class Gem::Mirror
         yield if block_given?
       end
     end
+
+    gemspecs_to_fetch.each do |g_spec|
+      @pool.job do
+         @fetcher.fetch(from("quick/Marshal.#{Gem.marshal_version}", g_spec), to("quick/Marshal.#{Gem.marshal_version}", g_spec))
+         yield if block_given?
+       end
+     end
 
     @pool.run_til_done
   end
