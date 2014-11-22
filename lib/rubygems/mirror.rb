@@ -7,8 +7,7 @@ class Gem::Mirror
 
   VERSION = '1.0.1'
 
-  SPECS_FILE = "specs.#{Gem.marshal_version}"
-  SPECS_FILE_Z = "specs.#{Gem.marshal_version}.gz"
+  SPECS_FILES = [ "specs.#{Gem.marshal_version}", "prerelease_specs.#{Gem.marshal_version}" ]
 
   DEFAULT_URI = 'http://production.cf.rubygems.org/'
   DEFAULT_TO = File.join(Gem.user_home, '.gem', 'mirror')
@@ -30,15 +29,24 @@ class Gem::Mirror
   end
 
   def update_specs
-    specz = to(SPECS_FILE_Z)
-    @fetcher.fetch(from(SPECS_FILE_Z), specz)
-    open(to(SPECS_FILE), 'wb') { |f| f << Gem.gunzip(Gem.read_binary(specz)) }
+    SPECS_FILES.each do |sf|
+      sfz = "#{sf}.gz"
+
+      specz = to(sfz)
+      @fetcher.fetch(from(sfz), specz)
+      open(to(sf), 'wb') { |f| f << Gem.gunzip(File.read(specz)) }
+    end
   end
 
   def gems
-    update_specs unless File.exist?(to(SPECS_FILE))
+    gems = []
 
-    gems = Marshal.load(Gem.read_binary(to(SPECS_FILE)))
+    SPECS_FILES.each do |sf|
+      update_specs unless File.exist?(to(sf))
+
+      gems += Marshal.load(File.read(to(sf)))
+    end
+
     gems.map! do |name, ver, plat|
       # If the platform is ruby, it is not in the gem name
       "#{name}-#{ver}#{"-#{plat}" unless plat == RUBY}.gem"
