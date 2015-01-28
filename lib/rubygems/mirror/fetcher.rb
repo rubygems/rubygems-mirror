@@ -17,8 +17,15 @@ class Gem::Mirror::Fetcher
     req = Net::HTTP::Get.new URI.parse(uri).path
     req.add_field 'If-Modified-Since', modified_time if modified_time
 
-    @http.request URI(uri), req do |resp|
-      return handle_response(resp, path)
+    # Net::HTTP will throw an exception on things like http timeouts.
+    # Therefore some generic error handling is needed in case no response
+    # is returned so the whole mirror operation doesn't abort prematurely.
+    begin
+      @http.request URI(uri), req do |resp|
+        return handle_response(resp, path)
+      end
+    rescue
+      warn "Error connecting to #{uri.to_s}"
     end
   end
 
