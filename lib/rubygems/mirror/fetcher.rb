@@ -24,8 +24,8 @@ class Gem::Mirror::Fetcher
       @http.request URI(uri), req do |resp|
         return handle_response(resp, path)
       end
-    rescue
-      warn "Error connecting to #{uri.to_s}"
+    rescue Exception => e
+      warn "Error connecting to #{uri.to_s}: #{e.message}"
     end
   end
 
