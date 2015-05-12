@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'fileutils'
+require 'zlib'
 
 class Gem::Mirror
   autoload :Fetcher, 'rubygems/mirror/fetcher'
@@ -28,16 +29,8 @@ class Gem::Mirror
     File.join(@to, *args)
   end
 
-  if RbConfig::CONFIG['SHELL'] == '/bin/bash' && system('which zcat >/dev/null')
-    def gunzip(src, dest)
-      open(dest, 'wb') do |f|
-        system("zcat", src, out: f)
-      end
-    end
-  else
-    def gunzip(src, dest)
-      open(dest, 'wb') { |f| f << Gem.gunzip(File.read(src)) }
-    end
+  def gunzip(src, dest)
+    open(dest, 'wb') { |f| f << Zlib::GzipReader.open(src).read }
   end
 
   def update_specs
