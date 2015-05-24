@@ -5,7 +5,7 @@ class Gem::Mirror::Fetcher
   # TODO  beef
   class Error < StandardError; end
 
-  def initialize opts={}
+  def initialize(opts = {})
     @http = Net::HTTP::Persistent.new(self.class.name, :ENV)
     @opts = opts
 
