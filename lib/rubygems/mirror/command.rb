@@ -19,9 +19,9 @@ document that looks like this:
   - from: http://gems.example.com # source repository URI
     to: /path/to/mirror           # destination directory
     parallelism: 10               # use 10 threads for downloads
-    retries: 3                      # retry 3 times if fail to download a gem, optional, def is 1. (no retry)
+    retries: 3                    # retry 3 times if fail to download a gem, optional, def is 1. (no retry)
     delete: false                 # whether delete gems (if remote ones are removed),optional, default is false. 
-    skiperror: true              # whether skip error, optional, def is true. will stop at error if set this to false.
+    skiperror: true               # whether skip error, optional, def is true. will stop at error if set this to false.
 
 Multiple sources and destinations may be specified.
     EOF
