@@ -14,9 +14,9 @@ class Gem::Mirror
 
   RUBY = 'ruby'
 
-  def initialize(from = DEFAULT_URI, to = DEFAULT_TO, parallelism = nil)
+  def initialize(from = DEFAULT_URI, to = DEFAULT_TO, parallelism = nil, retries = nil, skiperror = nil)
     @from, @to = from, to
-    @fetcher = Fetcher.new
+    @fetcher = Fetcher.new :retries => retries, :skiperror => skiperror
     @pool = Pool.new(parallelism || 10)
   end
 
