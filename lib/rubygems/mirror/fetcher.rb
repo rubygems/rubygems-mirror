@@ -5,8 +5,13 @@ class Gem::Mirror::Fetcher
   # TODO  beef
   class Error < StandardError; end
 
-  def initialize
+  def initialize(opts = {})
     @http = Net::HTTP::Persistent.new(self.class.name, :ENV)
+    @opts = opts
+
+    # default opts
+    @opts[:retries] ||= 1
+    @opts[:skiperror] = true if @opts[:skiperror].nil?
   end
 
   # Fetch a source path under the base uri, and put it in the same or given
@@ -17,15 +22,25 @@ class Gem::Mirror::Fetcher
     req = Net::HTTP::Get.new URI.parse(uri).path
     req.add_field 'If-Modified-Since', modified_time if modified_time
 
-    # Net::HTTP will throw an exception on things like http timeouts.
-    # Therefore some generic error handling is needed in case no response
-    # is returned so the whole mirror operation doesn't abort prematurely.
+    retries = @opts[:retries]
+    
     begin
-      @http.request URI(uri), req do |resp|
-        return handle_response(resp, path)
+      puts "get: #{uri}, #{retries}"
+      
+      # Net::HTTP will throw an exception on things like http timeouts.
+      # Therefore some generic error handling is needed in case no response
+      # is returned so the whole mirror operation doesn't abort prematurely.
+      begin
+        @http.request URI(uri), req do |resp|
+          return handle_response(resp, path)
+        end
+      rescue Exception => e
+        warn "Error connecting to #{uri.to_s}: #{e.message}"
       end
-    rescue Exception => e
-      warn "Error connecting to #{uri.to_s}: #{e.message}"
+    rescue Error
+      retries -= 1
+      retry if retries > 0
+      raise if not @opts[:skiperror]
     end
   end
 
@@ -39,7 +54,7 @@ class Gem::Mirror::Fetcher
     when 200
       write_file(resp, path)
     when 403, 404
-      warn "#{resp.code} on #{File.basename(path)}"
+      raise Error,"#{resp.code} on #{File.basename(path)}"
     else
       raise Error, "unexpected response #{resp.inspect}"
     end
