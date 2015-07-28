@@ -1,3 +1,12 @@
+=== 1.1.0 / 2015-07-28
+
+* Documentation corrections and updates
+* Fix no longer implicit dependencies with modern rubygems and ruby versions
+* Concurrency can be specified in configuration file
+* Support permanent redirects
+* Fixed support for system gems
+* Mirroring now includes all specs files and .rz's, and /quick
+
 === 1.0.0 / 2011-10-01
 
 * 1 major enhancement
