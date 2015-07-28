@@ -1,7 +1,8 @@
 = rubygems-mirror
-{<img src="https://badge.fury.io/rb/rubygems-mirror.svg" alt="Gem Version" />}[http://badge.fury.io/rb/rubygems-mirror]
 
 https://github.com/rubygems/rubygems-mirror
+
+{<img src="https://badge.fury.io/rb/rubygems-mirror.svg" alt="Gem Version" />}[http://badge.fury.io/rb/rubygems-mirror]
 
 == DESCRIPTION:
 
