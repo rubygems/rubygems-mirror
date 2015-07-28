@@ -1,7 +1,7 @@
 = rubygems-mirror
 {<img src="https://badge.fury.io/rb/rubygems-mirror.svg" alt="Gem Version" />}[http://badge.fury.io/rb/rubygems-mirror]
 
-http://github.com/rubygems/rubygems-mirror
+https://github.com/rubygems/rubygems-mirror
 
 == DESCRIPTION:
 
@@ -42,12 +42,12 @@ will maintain stability in master.
 
 == RESOURCES
 
-* {Website}[http://rubygems.org/]
-* {Documentation}[http://rubygems.rubyforge.org/rubygems-mirror/README.rdoc]
-* {Wiki}[http://wiki.github.com/rubygems/rubygems-mirror/]
-* {Source Code}[http://github.com/rubygems/rubygems-mirror/]
-* {Issues}[http://github.com/rubygems/rubygems-mirror/issues]
-* {Rubyforge}[http://rubyforge.org/projects/rubygems]
+* {Website}[https://rubygems.org/]
+* {Documentation}[https://github.com/rubygems/rubygems-mirror/blob/master/README.rdoc]
+* {Wiki}[https://wiki.github.com/rubygems/rubygems-mirror/]
+* {Source Code}[https://github.com/rubygems/rubygems-mirror/]
+* {Issues}[https://github.com/rubygems/rubygems-mirror/issues]
+* {Rubyforge}[https://rubyforge.org/projects/rubygems]
 
 == LICENSE:
 
