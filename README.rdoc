@@ -1,4 +1,5 @@
 = rubygems-mirror
+{<img src="https://badge.fury.io/rb/rubygems-mirror.svg" alt="Gem Version" />}[http://badge.fury.io/rb/rubygems-mirror]
 
 http://github.com/rubygems/rubygems-mirror
 
@@ -28,6 +29,9 @@ will maintain stability in master.
     - from: http://rubygems.org
       to: /data/rubygems
       parallelism: 10
+      retries: 3
+      delete: false 
+      skiperror: true
 
 * Either install the gem, then run `gem mirror`, or
 * Clone then run `rake mirror:update`
@@ -39,7 +43,7 @@ will maintain stability in master.
 == RESOURCES
 
 * {Website}[http://rubygems.org/]
-* {Documentation}[http://rubygems.rubyforge.org/rubygems-mirror/README_rdoc.html]
+* {Documentation}[http://rubygems.rubyforge.org/rubygems-mirror/README.rdoc]
 * {Wiki}[http://wiki.github.com/rubygems/rubygems-mirror/]
 * {Source Code}[http://github.com/rubygems/rubygems-mirror/]
 * {Issues}[http://github.com/rubygems/rubygems-mirror/issues]
