@@ -23,10 +23,8 @@ class Gem::Mirror::Fetcher
     req.add_field 'If-Modified-Since', modified_time if modified_time
 
     retries = @opts[:retries]
-    
+
     begin
-      puts "get: #{uri}, #{retries}"
-      
       # Net::HTTP will throw an exception on things like http timeouts.
       # Therefore some generic error handling is needed in case no response
       # is returned so the whole mirror operation doesn't abort prematurely.
