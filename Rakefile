@@ -1,5 +1,3 @@
-#!/usr/bin/env rake
-
 require 'hoe'
 Hoe.plugin :doofus, :git
 
