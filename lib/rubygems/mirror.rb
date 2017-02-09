@@ -1,5 +1,6 @@
 require 'rubygems'
 require 'fileutils'
+require 'zlib'
 
 class Gem::Mirror
   autoload :Fetcher, 'rubygems/mirror/fetcher'
@@ -28,13 +29,17 @@ class Gem::Mirror
     File.join(@to, *args)
   end
 
+  def gunzip(src, dest)
+    open(dest, 'wb') { |f| f << Zlib::GzipReader.open(src).read }
+  end
+
   def update_specs
     SPECS_FILES.each do |sf|
       sfz = "#{sf}.gz"
 
       specz = to(sfz)
       @fetcher.fetch(from(sfz), specz)
-      open(to(sf), 'wb') { |f| f << Gem.gunzip(File.read(specz)) }
+      gunzip(specz, to(sf))
     end
   end
 
