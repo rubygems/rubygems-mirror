@@ -22,6 +22,8 @@ document that looks like this:
     retries: 3                    # retry 3 times if fail to download a gem, optional, def is 1. (no retry)
     delete: false                 # whether delete gems (if remote ones are removed),optional, default is false. 
     skiperror: true               # whether skip error, optional, def is true. will stop at error if set this to false.
+    hashdir: false                # store files by directory hashes, meaning that they can reside on a filesystem
+                                  # with directory size limits. Default is false.
 
 Multiple sources and destinations may be specified.
     EOF
@@ -45,12 +47,13 @@ Multiple sources and destinations may be specified.
       parallelism = mir['parallelism']
       retries = mir['retries'] || 1
       skiperror = mir['skiperror']
+      hashdir = mir['hashdir'] || false
       delete = mir['delete']
 
       raise "Directory not found: #{save_to}" unless File.exist? save_to
       raise "Not a directory: #{save_to}" unless File.directory? save_to
 
-      mirror = Gem::Mirror.new(get_from, save_to, parallelism, retries, skiperror)
+      mirror = Gem::Mirror.new(get_from, save_to, parallelism, retries, skiperror, hashdir)
       
       Gem::Mirror::SPECS_FILES.each do |sf|
         say "Fetching: #{mirror.from(sf)}"
