@@ -34,9 +34,31 @@ will maintain stability in master.
       retries: 3
       delete: false 
       skiperror: true
+      hashdir: false
 
 * Either install the gem, then run `gem mirror`, or
 * Clone then run `rake mirror:update`
+
+=== Apache configuration for hashdir
+
+When rubygem-mirror is configured with hashdir: true, additional configuration
+for your web server will be required. Below are the Apache2 RewriteRules you may
+need:
+
+    RewriteEngine On
+
+    # Rubygem's URL's are:
+    # /gem/gems/foobar-1.0.0.gem
+    RewriteCond %{REQUEST_URI} ^/gem/gems/([^/])([^/])([^/]*)
+    RewriteCond %{DOCUMENT_ROOT}/gem/gems/$1/$1$2/ -d
+    RewriteRule ^/gem/gems/([^/])([^/])([^/]*)?$ /gem/gems/$1/$1$2/$1$2$3 [L]
+
+    # Rubygem's URL's are:
+    # /gem/quick/Marshal.4.8/foobar-1.0.0.gemspec.rz
+    RewriteCond %{REQUEST_URI} ^/gem/quick/([^/]+)/([^/])([^/])([^/]*)
+    RewriteCond %{DOCUMENT_ROOT}/gem/quick/$1/$2/$2$3/ -d
+    RewriteRule ^/gem/quick/([^/]+)/([^/])([^/])([^/]*)?$ /gem/quick/$1/$2/$2$3/$2$3$4 [L]
+
 
 == INSTALL:
 
