@@ -1,3 +1,8 @@
+=== 1.2.0 / 2018-05-10
+
+* Add only-latest mode with RUBYGEMS_MIRROR_ONLY_LATEST environment variable.
+* Check existence of gems whose name starts with dot
+
 === 1.1.0 / 2015-07-28
 
 * Documentation corrections and updates
