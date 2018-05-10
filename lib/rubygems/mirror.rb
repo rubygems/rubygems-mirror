@@ -55,7 +55,7 @@ class Gem::Mirror
   end
 
   def existing_gems
-    Dir[to('gems', '*.gem')].entries.map { |f| File.basename(f) }
+    Dir.glob(to('gems', '*.gem'), File::FNM_DOTMATCH).entries.map { |f| File.basename(f) }
   end
 
   def existing_gemspecs
