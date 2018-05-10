@@ -47,10 +47,25 @@ class Gem::Mirror
       gems += Marshal.load(File.read(to(sf)))
     end
 
-    gems.map! do |name, ver, plat|
-      # If the platform is ruby, it is not in the gem name
-      "#{name}-#{ver}#{"-#{plat}" unless plat == RUBY}.gem"
+    if ENV["RUBYGEMS_MIRROR_ONLY_LATEST"].to_s.upcase != "TRUE"
+      gems.map! do |name, ver, plat|
+        # If the platform is ruby, it is not in the gem name
+        "#{name}-#{ver}#{"-#{plat}" unless plat == RUBY}.gem"
+      end
+    else
+      latest_gems = {}
+
+      gems.each do |name, ver, plat|
+        next if ver.prerelease?
+        next unless plat == RUBY
+        latest_gems[name] = ver
+      end
+
+      gems = latest_gems.map do |name, ver|
+        "#{name}-#{ver}.gem"
+      end
     end
+
     gems
   end
 
@@ -82,10 +97,12 @@ class Gem::Mirror
       end
     end
 
-    gemspecs_to_fetch.each do |g_spec|
-      @pool.job do
-        @fetcher.fetch(from("quick/Marshal.#{Gem.marshal_version}", g_spec), to("quick/Marshal.#{Gem.marshal_version}", g_spec))
-        yield if block_given?
+    if ENV["RUBYGEMS_MIRROR_ONLY_LATEST"].to_s.upcase != "TRUE"
+      gemspecs_to_fetch.each do |g_spec|
+        @pool.job do
+          @fetcher.fetch(from("quick/Marshal.#{Gem.marshal_version}", g_spec), to("quick/Marshal.#{Gem.marshal_version}", g_spec))
+          yield if block_given?
+        end
       end
     end
 
