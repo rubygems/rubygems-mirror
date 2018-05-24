@@ -34,7 +34,7 @@ class Gem::Mirror
 
       specz = to(sfz)
       @fetcher.fetch(from(sfz), specz)
-      open(to(sf), 'wb') { |f| f << Gem.gunzip(File.read(specz)) }
+      open(to(sf), 'wb') { |f| f << Gem::Util.gunzip(File.read(specz)) }
     end
   end
 
