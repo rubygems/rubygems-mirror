@@ -6,7 +6,14 @@ class Gem::Mirror::Fetcher
   class Error < StandardError; end
 
   def initialize(opts = {})
-    @http = Net::HTTP::Persistent.new(self.class.name, :ENV)
+    @http = 
+      if defined?(Net::HTTP::Persistent::DEFAULT_POOL_SIZE)
+        Net::HTTP::Persistent.new(name: self.class.name, proxy: :ENV)
+      else
+        # net-http-persistent < 3.0
+        Net::HTTP::Persistent.new(self.class.name, :ENV)
+      end
+
     @opts = opts
 
     # default opts
