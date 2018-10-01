@@ -1,18 +1,5 @@
-require 'hoe'
-Hoe.plugin :doofus, :git
-
-Hoe.spec 'rubygems-mirror' do
-  developer('James Tucker', 'jftucker@gmail.com')
-  license "MIT"
-
-  extra_dev_deps << %w[minitest ~>5.7]
-  extra_deps     << %w[net-http-persistent ~>2.9]
-
-  self.extra_rdoc_files = FileList["**/*.rdoc"]
-  self.history_file     = "CHANGELOG.rdoc"
-  self.readme_file      = "README.rdoc"
-  self.testlib          = :minitest
-end
+require "bundler"
+Bundler::GemHelper.install_tasks
 
 namespace :mirror do
   desc "Run the Gem::Mirror::Command"
