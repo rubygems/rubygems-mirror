@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.summary = "This is an update to the old `gem mirror` command".freeze
   s.description = "This is an update to the old `gem mirror` command. It uses net/http/persistent\nand threads to grab the mirror set a little faster than the original.\nEventually it will replace `gem mirror` completely. Right now the API is not\ncompletely stable (it will change several times before release), however, I\nwill maintain stability in master.".freeze
 
-  s.authors = ["James Tucker".freeze]
-  s.email = ["jftucker@gmail.com".freeze]
+  s.authors = ["James Tucker".freeze, "Hiroshi SHIBATA".freeze]
+  s.email = ["jftucker@gmail.com".freeze, "hsbt@ruby-lang.org".freeze]
   s.files = File.read('Manifest.txt').split
   s.homepage = "https://github.com/rubygems/rubygems-mirror".freeze
   s.licenses = ["MIT".freeze]
