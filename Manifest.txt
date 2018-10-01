@@ -6,6 +6,7 @@ lib/rubygems/mirror.rb
 lib/rubygems/mirror/command.rb
 lib/rubygems/mirror/fetcher.rb
 lib/rubygems/mirror/pool.rb
+lib/rubygems/mirror/version.rb
 lib/rubygems/mirror/test_setup.rb
 lib/rubygems_plugin.rb
 test/test_gem_mirror.rb
