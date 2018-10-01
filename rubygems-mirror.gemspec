@@ -1,8 +1,9 @@
 # -*- encoding: utf-8 -*-
+require_relative "lib/rubygems/mirror/version"
 
 Gem::Specification.new do |s|
   s.name = "rubygems-mirror".freeze
-  s.version = "1.2.0"
+  s.version = Gem::Mirror::VERSION
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0".freeze) if s.respond_to? :required_rubygems_version=
   s.require_paths = ["lib".freeze]
