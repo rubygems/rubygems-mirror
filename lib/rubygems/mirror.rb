@@ -33,7 +33,7 @@ class Gem::Mirror
 
       specz = to(sfz)
       @fetcher.fetch(from(sfz), specz)
-      open(to(sf), 'wb') { |f| f << Gem::Util.gunzip(File.read(specz)) }
+      open(to(sf), 'wb') { |f| f << Gem::Util.gunzip(File.binread(specz)) }
     end
   end
 
@@ -43,7 +43,7 @@ class Gem::Mirror
     SPECS_FILES.each do |sf|
       update_specs unless File.exist?(to(sf))
 
-      gems += Marshal.load(File.read(to(sf)))
+      gems += Marshal.load(File.binread(to(sf)))
     end
 
     if ENV["RUBYGEMS_MIRROR_ONLY_LATEST"].to_s.upcase != "TRUE"
