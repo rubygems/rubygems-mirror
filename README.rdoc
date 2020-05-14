@@ -49,7 +49,6 @@ will maintain stability in master.
 * {Wiki}[https://wiki.github.com/rubygems/rubygems-mirror/]
 * {Source Code}[https://github.com/rubygems/rubygems-mirror/]
 * {Issues}[https://github.com/rubygems/rubygems-mirror/issues]
-* {Rubyforge}[https://rubyforge.org/projects/rubygems]
 
 == LICENSE:
 
