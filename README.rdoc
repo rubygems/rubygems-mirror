@@ -37,6 +37,8 @@ will maintain stability in master.
 
 * Either install the gem, then run `gem mirror`, or
 * Clone then run `rake mirror:update`
+* With the environment variable `RUBYGEMS_MIRROR_ONLY_LATEST=TRUE`,
+  rubygems-mirror fetches only the latest release of each gem
 
 == INSTALL:
 
