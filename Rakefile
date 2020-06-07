@@ -14,6 +14,6 @@ end
 
 namespace :test do
   task :integration do
-    sh Gem.ruby, '-Ilib', '-rubygems', '-S', 'gem', 'mirror'
+    sh Gem.ruby, '-Ilib', '-S', 'gem', 'mirror'
   end
 end
