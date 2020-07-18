@@ -13,6 +13,11 @@ namespace :mirror do
     mirror = Gem::Commands::MirrorCommand.new
     mirror.execute
   end
+
+  task :latest do
+    ENV["RUBYGEMS_MIRROR_ONLY_LATEST"] = "TRUE"
+    Rake::Task["mirror:update"].invoke
+  end
 end
 
 Rake::TestTask.new
