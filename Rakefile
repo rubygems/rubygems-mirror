@@ -1,5 +1,8 @@
 require "bundler"
 Bundler::GemHelper.install_tasks
+require "rake/testtask"
+
+task :default => :test
 
 namespace :mirror do
   desc "Run the Gem::Mirror::Command"
@@ -11,6 +14,8 @@ namespace :mirror do
     mirror.execute
   end
 end
+
+Rake::TestTask.new
 
 namespace :test do
   task :integration do
