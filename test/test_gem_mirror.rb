@@ -1,8 +1,11 @@
+gem 'builder'
+require 'builder/xchar'
+
 require "rubygems_plugin"
 require "rubygems/mirror"
 require "rubygems/mirror/test_setup"
 
-require 'minitest/autorun' # damn you autotest.
+require "minitest/autorun"
 
 class TestGemMirror < Minitest::Test
   include Gem::Mirror::TestSetup

@@ -81,7 +81,6 @@ class Gem::Mirror
           s.author = 'rubygems'
           s.email = 'example@example.com'
           s.homepage = 'http://example.com'
-          s.has_rdoc = false
           s.description = 'desc'
           s.summary = "summ"
           s.require_paths = %w[lib]
@@ -101,7 +100,6 @@ class Gem::Mirror
           s.author = 'rubygems'
           s.email = 'example@example.com'
           s.homepage = 'http://example.com'
-          s.has_rdoc = false
           s.description = 'desc'
           s.summary = "summ"
           s.require_paths = %w[lib]
