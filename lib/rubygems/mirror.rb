@@ -131,7 +131,7 @@ class Gem::Mirror
   def delete_gems
     gems_to_delete.each do |g|
       @pool.job do
-        File.delete(to('gems', g))
+        File.delete(to('gems', hash(g)))
         yield if block_given?
       end
     end
