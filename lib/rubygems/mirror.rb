@@ -24,7 +24,13 @@ class Gem::Mirror
   end
 
   def hash(path)
-    return File.join(path[0], path[0,2], path)
+    return path unless @hashdir
+    File.join(path[0], path[0,2], path)
+  end
+
+  def hash_glob(*args)
+    args.insert -2, "**" if @hashdir
+    args
   end
 
   def to(*args)
@@ -75,18 +81,14 @@ class Gem::Mirror
   end
 
   def existing_gems
-    path = to('gems', '*.gem')
-    if @hashdir
-        path = to('gems', '**', '*.gem')
-    end
+    path = to(*hash_glob('gems', '*.gem'))
+
     Dir.glob(path, File::FNM_DOTMATCH).entries.map { |f| File.basename(f) }
   end
 
   def existing_gemspecs
-    path = to("quick/Marshal.#{Gem.marshal_version}", '*.rz')
-    if @hashdir
-        path = to("quick/Marshal.#{Gem.marshal_version}", '**', '*.rz')
-    end
+    path = to(*hash_glob("quick/Marshal.#{Gem.marshal_version}", '*.rz'))
+
     Dir[path].entries.map { |f| File.basename(f) }
   end
 
@@ -105,10 +107,8 @@ class Gem::Mirror
   def update_gems
     gems_to_fetch.each do |g|
       @pool.job do
-        path = to('gems', g)
-        if @hashdir
-            path = to('gems', hash(g))
-        end
+        path = to('gems', hash(g))
+
         @fetcher.fetch(from('gems', g), path)
         yield if block_given?
       end
@@ -117,10 +117,8 @@ class Gem::Mirror
     if ENV["RUBYGEMS_MIRROR_ONLY_LATEST"].to_s.upcase != "TRUE"
       gemspecs_to_fetch.each do |g_spec|
         @pool.job do
-          path = to("quick/Marshal.#{Gem.marshal_version}", g_spec)
-          if @hashdir
-              path = to("quick/Marshal.#{Gem.marshal_version}", hash(g_spec))
-          end
+          path = to("quick/Marshal.#{Gem.marshal_version}", hash(g_spec))
+
           @fetcher.fetch(from("quick/Marshal.#{Gem.marshal_version}", g_spec), path)
           yield if block_given?
         end
