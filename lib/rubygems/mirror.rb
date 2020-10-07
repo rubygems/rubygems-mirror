@@ -1,6 +1,7 @@
 require 'rubygems'
 require 'fileutils'
 require 'rubygems/mirror/version'
+require 'rubygems/util'
 
 class Gem::Mirror
   autoload :Fetcher, 'rubygems/mirror/fetcher'
