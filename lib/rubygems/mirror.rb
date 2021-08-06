@@ -49,6 +49,10 @@ class Gem::Mirror
     end
   end
 
+  def all_gems?
+    ENV["RUBYGEMS_MIRROR_ONLY_LATEST"].to_s.upcase != "TRUE"
+  end
+
   def gems
     gems = []
 
@@ -59,7 +63,7 @@ class Gem::Mirror
       gems += Marshal.load(File.binread(path))
     end
 
-    if ENV["RUBYGEMS_MIRROR_ONLY_LATEST"].to_s.upcase != "TRUE"
+    if all_gems?
       gems.map! do |name, ver, plat|
         # If the platform is ruby, it is not in the gem name
         "#{name}-#{ver}#{"-#{plat}" unless plat == RUBY}.gem"
@@ -115,7 +119,7 @@ class Gem::Mirror
       end
     end
 
-    if ENV["RUBYGEMS_MIRROR_ONLY_LATEST"].to_s.upcase != "TRUE"
+    if all_gems?
       gemspecs_to_fetch.each do |g_spec|
         @pool.job do
           path = to("quick/Marshal.#{Gem.marshal_version}", hash(g_spec))
