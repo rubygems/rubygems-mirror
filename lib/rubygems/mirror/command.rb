@@ -78,7 +78,7 @@ Multiple sources and destinations may be specified.
         progress = ui.progress_reporter num_to_delete,
                                  "Deleting #{num_to_delete} gems"
 
-        trap(:INFO) { puts "Fetched: #{progress.count}/#{num_to_delete}" } if SUPPORTS_INFO_SIGNAL
+        trap(:INFO) { puts "Deleted: #{progress.count}/#{num_to_delete}" } if SUPPORTS_INFO_SIGNAL
 
         mirror.delete_gems { progress.updated true }
       end

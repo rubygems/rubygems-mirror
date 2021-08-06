@@ -147,6 +147,6 @@ class Gem::Mirror
   def update
     update_specs
     update_gems
-    cleanup_gems
+    delete_gems
   end
 end
