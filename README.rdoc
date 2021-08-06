@@ -21,7 +21,8 @@ will maintain stability in master.
 
 * rubygems
 * net/http/persistent
-* hoe
+* builder
+* webrick
 
 == USAGE
 
