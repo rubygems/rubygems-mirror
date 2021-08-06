@@ -33,7 +33,7 @@ will maintain stability in master.
       to: /data/rubygems
       parallelism: 10
       retries: 3
-      delete: false 
+      delete: false
       skiperror: true
       hashdir: false
 
