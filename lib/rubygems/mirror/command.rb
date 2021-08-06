@@ -20,7 +20,7 @@ document that looks like this:
     to: /path/to/mirror           # destination directory
     parallelism: 10               # use 10 threads for downloads
     retries: 3                    # retry 3 times if fail to download a gem, optional, def is 1. (no retry)
-    delete: false                 # whether delete gems (if remote ones are removed),optional, default is false. 
+    delete: false                 # whether delete gems (if remote ones are removed),optional, default is false.
     skiperror: true               # whether skip error, optional, def is true. will stop at error if set this to false.
     hashdir: false                # store files by directory hashes, meaning that they can reside on a filesystem
                                   # with directory size limits. Default is false.
@@ -54,7 +54,7 @@ Multiple sources and destinations may be specified.
       raise "Not a directory: #{save_to}" unless File.directory? save_to
 
       mirror = Gem::Mirror.new(get_from, save_to, parallelism, retries, skiperror, hashdir)
-      
+
       Gem::Mirror::SPECS_FILES.each do |sf|
         say "Fetching: #{mirror.from(sf)}"
       end
@@ -72,14 +72,13 @@ Multiple sources and destinations may be specified.
 
       mirror.update_gems { progress.updated true }
 
-
       if delete
         num_to_delete = mirror.gems_to_delete.size
 
         progress = ui.progress_reporter num_to_delete,
                                  "Deleting #{num_to_delete} gems"
 
-        trap(:INFO) { puts "Fetched: #{progress.count}/#{num_to_delete}" } if SUPPORTS_INFO_SIGNAL
+        trap(:INFO) { puts "Deleted: #{progress.count}/#{num_to_delete}" } if SUPPORTS_INFO_SIGNAL
 
         mirror.delete_gems { progress.updated true }
       end
