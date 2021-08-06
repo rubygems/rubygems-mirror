@@ -30,7 +30,7 @@ class Gem::Mirror
   end
 
   def hash_glob(*args)
-    args.insert -2, "**" if @hashdir
+    args.insert(-2, "**") if @hashdir
     args
   end
 
