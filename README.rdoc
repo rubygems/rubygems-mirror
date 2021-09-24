@@ -9,7 +9,7 @@ https://github.com/rubygems/rubygems-mirror
 This is an update to the old `gem mirror` command. It uses net/http/persistent
 and threads to grab the mirror set a little faster than the original.
 Eventually it will replace `gem mirror` completely. Right now the API is not
-completely stable (it will change several times before release), however, I
+completely stable (it will change several times before release); however, I
 will maintain stability in master.
 
 == FEATURES/PROBLEMS:
@@ -50,13 +50,13 @@ need:
 
     RewriteEngine On
 
-    # Rubygem's URL's are:
+    # Rubygem's URLs are:
     # /gem/gems/foobar-1.0.0.gem
     RewriteCond %{REQUEST_URI} ^/gem/gems/([^/])([^/])([^/]*)
     RewriteCond %{DOCUMENT_ROOT}/gem/gems/$1/$1$2/ -d
     RewriteRule ^/gem/gems/([^/])([^/])([^/]*)?$ /gem/gems/$1/$1$2/$1$2$3 [L]
 
-    # Rubygem's URL's are:
+    # Rubygem's URLs are:
     # /gem/quick/Marshal.4.8/foobar-1.0.0.gemspec.rz
     RewriteCond %{REQUEST_URI} ^/gem/quick/([^/]+)/([^/])([^/])([^/]*)
     RewriteCond %{DOCUMENT_ROOT}/gem/quick/$1/$2/$2$3/ -d
