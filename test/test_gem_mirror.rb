@@ -1,4 +1,3 @@
-gem 'builder'
 require 'builder/xchar'
 
 require "rubygems_plugin"
