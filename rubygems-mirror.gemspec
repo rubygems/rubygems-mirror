@@ -25,4 +25,6 @@ Gem::Specification.new do |s|
   s.add_development_dependency(%q<minitest>.freeze, ["~> 5.7"])
   s.add_development_dependency(%q<rdoc>.freeze, ["< 7", ">= 4.0"])
   s.add_development_dependency(%q<builder>.freeze, ["~> 3.2"])
+  s.add_development_dependency(%q<rubygems-generate_index>.freeze)
+  s.add_development_dependency(%q<rake>.freeze)
 end
