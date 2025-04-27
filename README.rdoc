@@ -29,7 +29,7 @@ will maintain stability in master.
 * In a file at ~/.gem/.mirrorrc add a config that looks like the following:
 
     ---
-    - from: http://rubygems.org
+    - from: https://rubygems.org
       to: /data/rubygems
       parallelism: 10
       retries: 3
